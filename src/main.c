@@ -19,9 +19,7 @@ int main(int argc, char* argv[]) {
     kiwish(STDIN_FILENO, STDOUT_FILENO);
   } else if (argc == MAX_ARGS) {
     int infile = open(*(argv + 1), O_RDONLY, S_IRWXU);
-    if (infile == SYSCALL_ERROR) {
-      panic("Error opening file");
-    }
+    if (infile == SYSCALL_ERROR) { panic("Error opening file"); }
     kiwish(infile, STDOUT_FILENO);
     close(infile);
   } else {

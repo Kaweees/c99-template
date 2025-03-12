@@ -6,7 +6,7 @@
  * @brief panic - A function that prints an error message and exits the program
  * @param str - a pointer to the error message to print
  */
-void panic(char *str) {
+void panic(char* str) {
   fprintf(stderr, "%s\n", str);
   exit(EXIT_FAILURE);
 }
