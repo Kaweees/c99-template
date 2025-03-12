@@ -10,6 +10,4 @@
 /**
  * @brief hello - A function that prints "Hello, World!"
  */
-void hello(void) {
-  printf("Hello, World!\n");
-}
+void hello(void) { printf("Hello, World!\n"); }

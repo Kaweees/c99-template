@@ -27,7 +27,7 @@ MEMCHECK_FLAGS := --leak-check=full --show-leak-kinds=all --track-origins=yes
 # The debugger executable.
 DEBUGGER := gdb
 # The debugger flags.
-DEBUGGER_FLAGS := 
+DEBUGGER_FLAGS :=
 
 # The name of the test input file
 TEST_INPUT := test_input.txt
@@ -63,7 +63,7 @@ BINS := $(BUILD_DIR)$(TARGET)
 ## Command Section: change these variables based on your commands
 # -----------------------------------------------------------------------------
 # Targets
-.PHONY: all $(TARGET) test clean debug help handin latedays testcases
+.PHONY: all $(TARGET) test clean debug help
 
 # Default target: build the program
 all: $(BINS)
@@ -73,12 +73,12 @@ $(TARGET): $(BINS)
 
 # Rule to build the program from linked object files
 $(BINS): $(OBJS)
-	@mkdir -p $(BUILD_DIR) # Create the build directory if it doesn't exist
+	@mkdir -p $(BUILD_DIR)
 	$(LD) $(LDFLAGS) $(OBJS) -o $(BINS)
 
-# Rule to compile source files into object files 
+# Rule to compile source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR) # Create the object directory if it doesn't exist
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 # Test target: build and test the program against sample input
@@ -97,7 +97,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 # Debug target: use a debugger to debug the program
-debug: $(BINS)	
+debug: $(BINS)
 	@echo "Debugging $(TARGET)..."
 	$(DEBUGGER) $(DEBUGGER_FLAGS) $(BINS)
 
