@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "../include/kiwish.h"
+#include "../include/hello.h"
 #include "../include/utils.h"
 
 /**
@@ -16,12 +16,7 @@
  */
 int main(int argc, char* argv[]) {
   if (argc == MIN_ARGS) {
-    kiwish(STDIN_FILENO, STDOUT_FILENO);
-  } else if (argc == MAX_ARGS) {
-    int infile = open(*(argv + 1), O_RDONLY, S_IRWXU);
-    if (infile == SYSCALL_ERROR) { panic("Error opening file"); }
-    kiwish(infile, STDOUT_FILENO);
-    close(infile);
+    hello();
   } else {
     usage(*argv);
   }
