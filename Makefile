@@ -57,13 +57,14 @@ INCS := -I$(INC_DIR)
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 # object files to link
 OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-# executable file to build
+# name of executable file to build
 BINS := $(BUILD_DIR)$(TARGET)
+# name of binary file to build
+TARGET_BIN := $(BINS).bin
 
 ## Command Section: change these variables based on your commands
 # -----------------------------------------------------------------------------
 # Targets
-.PHONY: all $(TARGET) test clean debug help
 .PHONY: all $(TARGET) dirs test clean debug help
 
 # Default target: build the program
@@ -72,10 +73,12 @@ all: $(BINS)
 # Build the program
 $(TARGET): $(BINS)
 
-# Rule to build the program from linked object files
-$(BINS): $(OBJS)
-	@mkdir -p $(BUILD_DIR)
-	$(LD) $(LDFLAGS) $(OBJS) -o $(BINS)
+# Rule to build the target files
+$(BINS): dirs $(TARGET_BIN)
+
+# Rule to build the binary file from linked object files
+$(TARGET_BIN): $(OBJS)
+	$(LD) $(LDFLAGS) $(OBJS) -o $(TARGET_BIN)
 
 # Rule to compile source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -83,7 +86,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Test target: build and test the program against sample input
 test: $(TARGET)
-	$(BINS) -c -f $(TEST_OUTPUT) $(TEST_INPUT)
+	$(TARGET_BIN) -c -f $(TEST_OUTPUT) $(TEST_INPUT)
 
 # @echo "Testing $(BINS)..."
 # @echo "Testing memory leaks..."
@@ -102,9 +105,9 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 # Debug target: use a debugger to debug the program
-debug: $(BINS)
+debug: $(TARGET_BIN)
 	@echo "Debugging $(TARGET)..."
-	$(DEBUGGER) $(DEBUGGER_FLAGS) $(BINS)
+	$(DEBUGGER) $(DEBUGGER_FLAGS) $(TARGET_BIN)
 
 # Help target: display usage information
 help:
@@ -112,8 +115,8 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  all              Build $(TARGET)"
-	@echo "  $(TARGET) 	   Build $(TARGET)"
+	@echo "  $(TARGET)        Build $(TARGET)"
 	@echo "  test             Build and test $(TARGET) against a sample input, use $(MEMCHECK) to check for memory leaks, and compare the output to $(REF_EXE)"
 	@echo "  clean            Remove build artifacts and non-essential files"
-	@echo "  debug            Use $(DEBUGGER) to debug $(HENCODE_TARGET) and $(HDECODE_TARGET)"
+	@echo "  debug            Use $(DEBUGGER) to debug $(TARGET)"
 	@echo "  help             Display this help information"
