@@ -64,6 +64,7 @@ BINS := $(BUILD_DIR)$(TARGET)
 # -----------------------------------------------------------------------------
 # Targets
 .PHONY: all $(TARGET) test clean debug help
+.PHONY: all $(TARGET) dirs test clean debug help
 
 # Default target: build the program
 all: $(BINS)
@@ -78,7 +79,6 @@ $(BINS): $(OBJS)
 
 # Rule to compile source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 # Test target: build and test the program against sample input
@@ -90,6 +90,11 @@ test: $(TARGET)
 # $(MEMCHECK) $(MEMCHECK_FLAGS) $(BINS)
 # @echo "Comparing output to $(REF_EXE):"
 # diff <($(BINS)) <($(REF_EXE))
+
+# Directory target: create the build and object directories
+dirs:
+	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 # Clean target: remove build artifacts and non-essential files
 clean:
