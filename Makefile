@@ -101,8 +101,8 @@ dirs:
 
 # Clean target: remove build artifacts and non-essential files
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
-	rm -rf $(BUILD_DIR)
+	@rm -rf $(OBJ_DIR) $(BIN_DIR)
+	@rm -rf $(BUILD_DIR)
 
 # Debug target: use a debugger to debug the program
 debug: $(TARGET_BIN)
